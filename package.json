@@ -1,0 +1,16 @@
+{
+  "name": "@hyrious/configs",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Shared configs across my projects",
+  "author": "hyrious <hyrious@outlook.com>",
+  "license": "MIT",
+  "repository": "hyrious/configs",
+  "main": "configs.js",
+  "types": "configs.d.ts",
+  "files": [
+    "configs.js",
+    "tsconfig.json",
+    "tsconfig.strictest.json"
+  ]
+}
