@@ -11,6 +11,7 @@
     "strictPropertyInitialization": false,
     "useUnknownInCatchVariables": false,
     "noImplicitOverride": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "moduleDetection": "force"
   }
 }

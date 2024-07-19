@@ -6,6 +6,7 @@
     "types": [],
     "skipLibCheck": true,
     "noEmit": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force"
   }
 }
