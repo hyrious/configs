@@ -6,7 +6,6 @@
     "types": [],
     "skipLibCheck": true,
     "noEmit": true,
-    "verbatimModuleSyntax": true,
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
     "useUnknownInCatchVariables": false,
