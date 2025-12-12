@@ -10,6 +10,8 @@ npm i -g @hyrious/configs
 
 ### [tsconfig.json](./docs/tsconfig.md)
 
+- 0.1.5: Add new variant for Node.js directly run TypeScript files.
+
 - 0.1.4: Remove `"verbatimModuleSyntax"` from the casual variant.
 
 - 0.1.3: Add [`"moduleDetection": "force"`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#control-over-module-detection).

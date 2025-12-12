@@ -56,7 +56,15 @@ Same config as variant 1, plus the 4 stricter settings:
 "noUncheckedIndexedAccess": true
 ```
 
-## Variant 3 - `tsconfig.casual.json` (My Favorite)
+## Variant 3 - `tsconfig.node.json`
+
+Since Node.js 22.18 we can run `node script.ts` directly. This variant allows that use case.
+
+See [the section in VS Code 1.107 changelog](https://code.visualstudio.com/updates/v1_107#_updated-build-scripts-run-directly-as-typescript) for more details.
+
+Bonus: you can run Electron main scripts in TypeScript directly too.
+
+## Variant 4 - `tsconfig.casual.json` (My Favorite)
 
 Less strict mode, it alters these settings from `strict`:
 
@@ -107,11 +115,11 @@ Marijn is the author of CodeMirror, ProseMirror, Acorn and [Eloquent JavaScript]
 He doesn't use any formatter or linter other than TypeScript itself, which gives
 him the most free way to write codes. Here's the basic setup if you want to do something like him:
 
-1. Init the project, I have a minimal template to do so:
+1. Init the project, I have a minimal [template](https://github.com/hyrious/create/blob/main/cli.js) to do so:
 
    ```bash
    mkdir something-useful && cd something-useful
-   npm create @hyrious [--cli] [--vite] [--dual] [--public]
+   npm create @hyrious [--cli] [--vite] [--dual] [--public] [--pnpm-better-defaults]
    # --cli     generate a CLI entrypoint
    # --vite    generate index.html and main.ts
    # --dual    build to dist/index.js and dist/index.mjs
@@ -166,63 +174,9 @@ him the most free way to write codes. Here's the basic setup if you want to do s
    }
    ```
 
-4. In case you want to generate bundled types, I have a package to do that:
+4. In case you want to generate bundled types, I have a [package](https://github.com/hyrious/dts) to do that:
 
    ```bash
    npm add -D @hyrious/dts
-   dts src/index.ts -o dist/index.d.ts
-   ```
-
-5. Bonus: write `/// comments` like codemirror's source code.
-   Patch `rollup-plugin-dts` with something like:
-
-   ```diff
-   diff --git a/dist/rollup-plugin-dts.mjs b/dist/rollup-plugin-dts.mjs
-   index ef394ab8c1ecb5f29f2842dab77808a5003568f2..ba606acda7d1d2508d11a50d1bdc46e8601accef 100644
-   --- a/dist/rollup-plugin-dts.mjs
-   +++ b/dist/rollup-plugin-dts.mjs
-   @@ -106,9 +106,24 @@ function getCompilerOptions(input, overrideOptions, overrideConfigPath) {
-            },
-        };
-    }
-   +function readAndMangleComments() {
-   +    return (name) => {
-   +        let file = ts.sys.readFile(name);
-   +        if (file && !name.includes('node_modules'))
-   +            file = file.replace(/(?<=^|\n)(?:([ \t]*)\/\/\/.*\n)+/g, (comment, space) => {
-   +                return `${space}/**\n${space}${comment.slice(space.length).replace(/\/\/\/ ?/g, " * ")}${space} */\n`;
-   +            });
-   +        return file;
-   +    }
-   +}
-   +function createCompilerHost(compilerOptions, setParentNodes = false) {
-   +    const host = ts.createCompilerHost(compilerOptions, setParentNodes);
-   +    host.readFile = readAndMangleComments(compilerOptions);
-   +    return host;
-   +}
-    function createProgram$1(fileName, overrideOptions, tsconfig) {
-        const { dtsFiles, compilerOptions } = getCompilerOptions(fileName, overrideOptions, tsconfig);
-   -    return ts.createProgram([fileName].concat(Array.from(dtsFiles)), compilerOptions, ts.createCompilerHost(compilerOptions, true));
-   +    return ts.createProgram([fileName].concat(Array.from(dtsFiles)), compilerOptions, createCompilerHost(compilerOptions, true));
-    }
-    function createPrograms(input, overrideOptions, tsconfig) {
-        const programs = [];
-   @@ -132,7 +147,7 @@ function createPrograms(input, overrideOptions, tsconfig) {
-                inputs.push(main);
-            }
-            else {
-   -            const host = ts.createCompilerHost(compilerOptions, true);
-   +            const host = createCompilerHost(compilerOptions, true);
-                const program = ts.createProgram(inputs.concat(Array.from(dtsFiles)), compilerOptions, host);
-                programs.push(program);
-                inputs = [main];
-   @@ -140,7 +155,7 @@ function createPrograms(input, overrideOptions, tsconfig) {
-            }
-        }
-        if (inputs.length) {
-   -        const host = ts.createCompilerHost(compilerOptions, true);
-   +        const host = createCompilerHost(compilerOptions, true);
-            const program = ts.createProgram(inputs.concat(Array.from(dtsFiles)), compilerOptions, host);
-            programs.push(program);
-        }
+   npx dts src/index.ts -o dist/index.d.ts
    ```

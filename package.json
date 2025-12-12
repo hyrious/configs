@@ -10,8 +10,9 @@
   "types": "configs.d.ts",
   "files": [
     "configs.js",
-    "tsconfig.casual.json",
     "tsconfig.json",
+    "tsconfig.node.json",
+    "tsconfig.casual.json",
     "tsconfig.strictest.json"
   ]
 }

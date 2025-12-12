@@ -2,15 +2,13 @@
   "compilerOptions": {
     "strict": true,
     "target": "esnext",
-    "module": "preserve",
-    "types": [],
+    "module": "nodenext",
     "skipLibCheck": true,
     "noEmit": true,
-    "noImplicitAny": false,
-    "strictPropertyInitialization": false,
+    "erasableSyntaxOnly": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
     "useUnknownInCatchVariables": false,
-    "noImplicitOverride": true,
-    "useDefineForClassFields": false,
     "moduleDetection": "force"
   }
 }
