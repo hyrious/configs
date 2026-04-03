@@ -3,6 +3,7 @@
     "strict": true,
     "target": "esnext",
     "module": "nodenext",
+    "types": ["*"],
     "skipLibCheck": true,
     "noEmit": true,
     "erasableSyntaxOnly": true,

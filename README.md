@@ -10,6 +10,8 @@ npm i -g @hyrious/configs
 
 ### [tsconfig.json](./docs/tsconfig.md)
 
+- 0.1.6: Add `"types": ["*"]` to the Node.js variant. [TypeScript 5.x to 6.0 Migration Guide](https://gist.github.com/privatenumber/3d2e80da28f84ee30b77d53e1693378f).
+
 - 0.1.5: Add new variant for Node.js directly run TypeScript files.
 
 - 0.1.4: Remove `"verbatimModuleSyntax"` from the casual variant.
